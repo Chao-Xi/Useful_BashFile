@@ -20,3 +20,6 @@ aws elb describe-load-balancers| jq -r '.LoadBalancerDescriptions[] | {(.LoadBal
 #Add [] outside the output
 aws elb describe-load-balancers| jq -r '[.LoadBalancerDescriptions[] | {(.LoadBalancerName) : [.Instances[].InstanceId] }]'
 
+
+#Get all instances from elb
+aws elb describe-load-balancers| jq -r '.LoadBalancerDescriptions[].Instances[].InstanceId'
