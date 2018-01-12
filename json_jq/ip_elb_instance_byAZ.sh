@@ -1,6 +1,6 @@
 #!/bin/bash
 
-elbs="$(aws elb describe-load-balancers| jq --raw-output .LoadBalancerDescriptions[].LoadBalancerName)"
+elbs="$(aws elb describe-load-balancers| jq -r .LoadBalancerDescriptions[].LoadBalancerName)"
 elb_arr=($elbs)
 
 
@@ -13,7 +13,7 @@ do
    for i in "${instance_arr[@]}"
    do
    	  :
-      ip="$(aws ec2 describe-instances --instance-id $i | jq --raw-output '.Reservations[].Instances[] | {instance_id : .InstanceId, public_ip_address : .PublicIpAddress, private_ip_address : .PrivateIpAddress}')"
+      ip="$(aws ec2 describe-instances --instance-id $i | jq -r '.Reservations[].Instances[] | {instance_id : .InstanceId, public_ip_address : .PublicIpAddress, private_ip_address : .PrivateIpAddress}')"
       echo $ip
    done   	  
 done
