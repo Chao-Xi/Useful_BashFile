@@ -2,12 +2,13 @@
 
 elbs="$(aws elb describe-load-balancers| jq -r .LoadBalancerDescriptions[].LoadBalancerName)"
 elb_arr=($elbs)
-
+BLUE='\033[0;96m'
+NC='\033[0m' 
 
 for j in "${elb_arr[@]}"
 do
    : 
-   echo "load-balancer-name: $j"
+   echo -e "${BLUE}load-balancer-name: $j ${NC}"
    instances="$(aws elb describe-load-balancers --load-balancer-names $j | jq -r .LoadBalancerDescriptions[].Instances[].InstanceId)"
    instance_arr=($instances)
    for i in "${instance_arr[@]}"
