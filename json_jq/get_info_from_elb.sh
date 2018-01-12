@@ -23,3 +23,6 @@ aws elb describe-load-balancers| jq -r '[.LoadBalancerDescriptions[] | {(.LoadBa
 
 #Get all instances from elb
 aws elb describe-load-balancers| jq -r '.LoadBalancerDescriptions[].Instances[].InstanceId'
+
+#Get instances from by elb name
+aws elb describe-load-balancers --load-balancer-names mbaas-stage-tyo | jq -r '.LoadBalancerDescriptions[] | {(.LoadBalancerName) : [.Instances[].InstanceId]}'
